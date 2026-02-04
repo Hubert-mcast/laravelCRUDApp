@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Review extends Model
+class Wine extends Model
 {
     use HasFactory;
 
@@ -14,5 +14,5 @@ class Review extends Model
         return $this->belongsTo(Menu::class);
     }
 
-    protected $fillable = ['menu_id','rating','body'];
+    protected $fillable = ['name','colour'];
 }
