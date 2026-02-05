@@ -3,6 +3,6 @@
 @section('content')
 <div class="container">
     <h1>Edit Review</h1>
-    @include('review.form', ['route' => route('review.update', $dish), 'method' => 'PUT'])
+    @include('reviews.form', ['route' => route('reviews.update', $review), 'method' => 'PUT'])
 </div>
 @endsection

@@ -22,7 +22,7 @@ class DishController extends Controller
     public function create()
     {
         $dish = new Dish();
-        return view('dishes.create', compact('dish'));
+        return view('dishes.create', compact('dishes'));
     }
 
     /**
@@ -42,7 +42,7 @@ class DishController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Dish $dish)
+    public function show($id)
     {
         $dish = Dish::find($id);
         return view('dishes.show', compact('dish'));
@@ -51,7 +51,7 @@ class DishController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Dish $dish)
+    public function edit($id)
     {
         $dish = Dish::find($id);
         $dishes = Dish::orderBy('name')->pluck('name', 'id')->prepend('All Dishes', '');
@@ -61,7 +61,7 @@ class DishController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Dish $dish)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'name' => 'required',
@@ -76,7 +76,7 @@ class DishController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Dish $dish)
+    public function destroy($id)
     {
         $dish = Dish::find($id);
         $dish->delete();

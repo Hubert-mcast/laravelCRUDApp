@@ -9,20 +9,30 @@ class Menu extends Model
 {
     use HasFactory;
 
-    public function dishes()
+    public function appetizerDish()
     {
-        return $this->hasMany(Dish::class);
+        return $this->belongsTo(Dish::class, 'appetizer');
     }
 
-    public function wines()
+    public function mainDish()
     {
-        return this->hasMany(Wine::class);
+        return $this->belongsTo(Dish::class, 'main_course');
+    }
+
+    public function dessertDish()
+    {
+        return $this->belongsTo(Dish::class, 'dessert');
+    }
+
+    public function wine()
+    {
+        return $this->belongsTo(Wine::class, 'wine_pairing');
     }
 
     public function reviews()
     {
-        return this->hasMany(Review::class);
+        return $this->hasMany(Review::class);
     }
 
-    protected $fillable = ['name','appetizer','main course','desert','wine pairing'];
+    protected $fillable = ['name','appetizer','main_course','dessert','wine_pairing'];
 }

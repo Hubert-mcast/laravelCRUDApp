@@ -19,7 +19,7 @@
 
     <div class="mb-3">
         <label>Colour</label>
-        <input type="text" name="type" class="form-control" value="{{ old('type', $wine->type ?? '') }}">
+        <input type="text" name="colour" class="form-control" value="{{ old('colour', $wine->colour ?? '') }}">
     </div>
 
     <button class="btn btn-success">Save</button>

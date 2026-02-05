@@ -53,13 +53,6 @@
                     <a class="nav-link {{ request()->routeIs('reviews.*') ? 'active' : '' }}"
                        href="{{ route('reviews.index') }}">Reviews</a>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('reviews.public.create') }}">
-                        Write Review
-                    </a>
-                </li>
-
             </ul>
         </div>
     </div>

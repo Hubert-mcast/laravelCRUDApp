@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Review;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -23,7 +24,7 @@ class ReviewController extends Controller
     {
         $reviews = new Review();
         $menus = Menu::orderBy('name')->pluck('name', 'id')->prepend('All Menus', '');
-        return view('reviews.create', compact('review', 'menu'));
+        return view('reviews.create', compact('reviews', 'menus'));
     }
 
     /**
@@ -31,7 +32,8 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        $request-validate([
+        dd($request->all());
+        $request->validate([
             'menu_id' => 'required|exists:menus,id',
             'rating' => 'required',
             'body' => 'required',
@@ -43,7 +45,7 @@ class ReviewController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Review $review)
+    public function show($id)
     {
         $review = Review::find($id);
         return view('reviews.show', compact('review'));
@@ -52,17 +54,17 @@ class ReviewController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Review $review)
+    public function edit($id)
     {
         $review = Review::find($id);
-        $reviews = Review::orderBy('rating')->pluck('rating', 'menu_id', 'id')->prepend('All Reviews', '');
-        return view('reviews.edit', compact('review', 'menu'));
+        $menus = Menu::orderBy('name')->pluck('name', 'id')->prepend('All Reviews', '');
+        return view('reviews.edit', compact('review', 'menus'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Review $review)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'menu_id' => 'required|exists:menus,id',
@@ -77,7 +79,7 @@ class ReviewController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Review $review)
+    public function destroy($id)
     {
         $review = Review::find($id);
         $review->delete();

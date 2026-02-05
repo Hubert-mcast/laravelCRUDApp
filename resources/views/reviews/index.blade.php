@@ -10,12 +10,14 @@
         <tr>
             <th>Menu</th>
             <th>Rating</th>
+            <th>Body</th>
             <th>Actions</th>
         </tr>
         @foreach($reviews as $review)
         <tr>
             <td>{{ $review->menu->name ?? 'N/A' }}</td>
             <td>{{ $review->rating }}/5</td>
+            <td>{{ $review->body}}</td>
             <td>
                 <a href="{{ route('reviews.show', $review) }}" class="btn btn-info btn-sm">View</a>
                 <a href="{{ route('reviews.edit', $review) }}" class="btn btn-warning btn-sm">Edit</a>

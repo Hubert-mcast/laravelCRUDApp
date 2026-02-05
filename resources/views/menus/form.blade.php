@@ -39,7 +39,7 @@
     </div>
 
     <div class="mb-3">
-        <label>Desert</label>
+        <label>Dessert</label>
         <select name="dessert" class="form-control" required>
             @foreach($dishes as $id => $name)
                 <option value="{{ $id }}" @selected(old('dessert', $menu->dessert ?? '') == $id)>{{ $name }}</option>
@@ -49,9 +49,9 @@
 
     <div class="mb-3">
         <label>Wine Pairing</label>
-        <select name="wine_id" class="form-control">
+        <select name="wine_pairing" class="form-control">
             @foreach($wines as $id => $name)
-                <option value="{{ $id }}" @selected(old('wine_id', $menu->wine_id ?? '') == $id)>{{ $name }}</option>
+                <option value="{{ $id }}" @selected(old('wine_pairing', $menu->wine_pairing ?? '') == $id)>{{ $name }}</option>
             @endforeach
         </select>
     </div>

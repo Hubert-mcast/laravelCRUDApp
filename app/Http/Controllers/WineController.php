@@ -13,7 +13,7 @@ class WineController extends Controller
     public function index()
     {
         $wines = Wine::all();
-        return view('Wine.index', compact('wines'));
+        return view('wines.index', compact('wines'));
     }
 
     /**
@@ -22,7 +22,7 @@ class WineController extends Controller
     public function create()
     {
         $wines = new Wine();
-        return view('wines.create', compact('wine'));
+        return view('wines.create', compact('wines'));
     }
 
     /**
@@ -30,7 +30,7 @@ class WineController extends Controller
      */
     public function store(Request $request)
     {
-        $request-validate([
+        $request->validate([
             'name' => 'required',
             'colour' => 'required',
         ]);
@@ -41,26 +41,25 @@ class WineController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Wine $wine)
+    public function show($id)
     {
         $wine = Wine::find($id);
-        return view('wines.show', compact('wine'));
+        return view('wines.show', compact('wines'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Wine $wine)
+    public function edit($id)
     {
         $wine = Wine::find($id);
-        $wines = Wine::orderBy('name')->pluck('name', 'id')->prepend('All Wines', '');
         return view('wines.edit', compact('wine'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Wine $wine)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'name' => 'required',
@@ -74,7 +73,7 @@ class WineController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Wine $wine)
+    public function destroy($id)
     {
         $wine = Wine::find($id);
         $wine->delete();
