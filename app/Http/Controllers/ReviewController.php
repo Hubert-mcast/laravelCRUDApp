@@ -32,7 +32,6 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         $request->validate([
             'menu_id' => 'required|exists:menus,id',
             'rating' => 'required',
