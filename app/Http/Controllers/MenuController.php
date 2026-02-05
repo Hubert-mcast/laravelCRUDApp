@@ -12,7 +12,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-        //
+        $menus = Menu::all();
+        return view('menus.index', compact('menus'));
     }
 
     /**
@@ -20,7 +21,10 @@ class MenuController extends Controller
      */
     public function create()
     {
-        //
+        $menus = new Menu();
+        $dishes = Dish::orderBy('name')->pluck('name', 'id')->prepend('All Dishes', '');
+        $wines = Wine::orderBy('name')->pluck('name', 'id')->prepend('All Wines', '');
+        return view('menus.create', compact('menu', 'dish', 'wine'));
     }
 
     /**
@@ -28,7 +32,15 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request-validate([
+            'name' => 'required',
+            'appetizer' => 'required|exists:dishes,id',
+            'main course' => 'required|exists:dishes,id',
+            'desert' => 'required|exists:dishes,id',
+            'wine pairing' => 'nullable|exists:wines,id',
+        ]);
+        Menu::create($request->all());
+        return redirect()->route('menus.index')->with('message', 'Menu added sucessfully');
     }
 
     /**
@@ -36,7 +48,8 @@ class MenuController extends Controller
      */
     public function show(Menu $menu)
     {
-        //
+        $menu = Menu::find($id);
+        return view('menus.show', compact('menu'));
     }
 
     /**
@@ -44,7 +57,9 @@ class MenuController extends Controller
      */
     public function edit(Menu $menu)
     {
-        //
+        $menu = Menu::find($id);
+        $menus = Menu::orderBy('name')->pluck('name', 'id')->prepend('All Menus', '');
+        return view('menus.edit', compact('menu', 'dish', 'wine'));
     }
 
     /**
@@ -52,7 +67,16 @@ class MenuController extends Controller
      */
     public function update(Request $request, Menu $menu)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'appetizer' => 'required|exists:dishes,id',
+            'main course' => 'required|exists:dishes,id',
+            'desert' => 'required|exists:dishes,id',
+            'wine pairing' => 'required|exists:wines,id',
+        ]);
+        $menu = Menu::find($id);
+        $menu->update($request->all());
+        return redirect()->route('menus.index')->with('message', 'Menu updated successfully');
     }
 
     /**
@@ -60,6 +84,8 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
-        //
+        $menu = Menu::find($id);
+        $menu->delete();
+        return redirect()->route('menus.index')->with('message', 'Menu deleted successfully');
     }
 }

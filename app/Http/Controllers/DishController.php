@@ -12,7 +12,8 @@ class DishController extends Controller
      */
     public function index()
     {
-        //
+        $dishes = Dish::all();
+        return view('Dish.index', compact('dishes'));
     }
 
     /**
@@ -20,7 +21,8 @@ class DishController extends Controller
      */
     public function create()
     {
-        //
+        $dishes = new Dish();
+        return view('dishes.create', compact('dish'));
     }
 
     /**
@@ -28,7 +30,13 @@ class DishController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request-validate([
+            'name' => 'required',
+            'price' => 'required',
+            'prep time in minutes' => 'required',
+        ]);
+        Dish::create($request->all());
+        return redirect()->route('dishes.index')->with('message', 'Dish added sucessfully');
     }
 
     /**
@@ -36,7 +44,8 @@ class DishController extends Controller
      */
     public function show(Dish $dish)
     {
-        //
+        $dish = Dish::find($id);
+        return view('dishes.show', compact('dish'));
     }
 
     /**
@@ -44,7 +53,9 @@ class DishController extends Controller
      */
     public function edit(Dish $dish)
     {
-        //
+        $dish = Dish::find($id);
+        $dishes = Dish::orderBy('name')->pluck('name', 'id')->prepend('All Dishes', '');
+        return view('dishes.edit', compact('dish'));
     }
 
     /**
@@ -52,7 +63,14 @@ class DishController extends Controller
      */
     public function update(Request $request, Dish $dish)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required',
+            'prep time in minutes' => 'required',
+        ]);
+        $dish = Dish::find($id);
+        $dish->update($request->all());
+        return redirect()->route('dishes.index')->with('message', 'Dish updated successfully');
     }
 
     /**
@@ -60,6 +78,8 @@ class DishController extends Controller
      */
     public function destroy(Dish $dish)
     {
-        //
+        $dish = Dish::find($id);
+        $dish->delete();
+        return redirect()->route('dishes.index')->with('message', 'Dish deleted successfully');
     }
 }

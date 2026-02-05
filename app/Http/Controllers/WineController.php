@@ -12,7 +12,8 @@ class WineController extends Controller
      */
     public function index()
     {
-        //
+        $wines = Wine::all();
+        return view('Wine.index', compact('wines'));
     }
 
     /**
@@ -20,7 +21,8 @@ class WineController extends Controller
      */
     public function create()
     {
-        //
+        $wines = new Wine();
+        return view('wines.create', compact('wine'));
     }
 
     /**
@@ -28,7 +30,12 @@ class WineController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request-validate([
+            'name' => 'required',
+            'colour' => 'required',
+        ]);
+        Wine::create($request->all());
+        return redirect()->route('wines.index')->with('message', 'Wine added sucessfully');
     }
 
     /**
@@ -36,7 +43,8 @@ class WineController extends Controller
      */
     public function show(Wine $wine)
     {
-        //
+        $wine = Wine::find($id);
+        return view('wines.show', compact('wine'));
     }
 
     /**
@@ -44,7 +52,9 @@ class WineController extends Controller
      */
     public function edit(Wine $wine)
     {
-        //
+        $wine = Wine::find($id);
+        $wines = Wine::orderBy('name')->pluck('name', 'id')->prepend('All Wines', '');
+        return view('wines.edit', compact('wine'));
     }
 
     /**
@@ -52,7 +62,13 @@ class WineController extends Controller
      */
     public function update(Request $request, Wine $wine)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'colour' => 'required',
+        ]);
+        $wine = Wine::find($id);
+        $wine->update($request->all());
+        return redirect()->route('wines.index')->with('message', 'Wine updated successfully');
     }
 
     /**
@@ -60,6 +76,8 @@ class WineController extends Controller
      */
     public function destroy(Wine $wine)
     {
-        //
+        $wine = Wine::find($id);
+        $wine->delete();
+        return redirect()->route('wines.index')->with('message', 'Wine deleted successfully');
     }
 }

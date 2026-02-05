@@ -12,7 +12,8 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        //
+        $reviews = Review::all();
+        return view('reviews.index', compact('reviews'));
     }
 
     /**
@@ -20,7 +21,9 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        //
+        $reviews = new Review();
+        $menus = Menu::orderBy('name')->pluck('name', 'id')->prepend('All Menus', '');
+        return view('reviews.create', compact('review', 'menu'));
     }
 
     /**
@@ -28,7 +31,13 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request-validate([
+            'menu_id' => 'required|exists:menus,id',
+            'rating' => 'required',
+            'body' => 'required',
+        ]);
+        Review::create($request->all());
+        return redirect()->route('reviews.index')->with('message', 'Review added sucessfully');
     }
 
     /**
@@ -36,7 +45,8 @@ class ReviewController extends Controller
      */
     public function show(Review $review)
     {
-        //
+        $review = Review::find($id);
+        return view('reviews.show', compact('review'));
     }
 
     /**
@@ -44,7 +54,9 @@ class ReviewController extends Controller
      */
     public function edit(Review $review)
     {
-        //
+        $review = Review::find($id);
+        $reviews = Review::orderBy('rating')->pluck('rating', 'menu_id', 'id')->prepend('All Reviews', '');
+        return view('reviews.edit', compact('review', 'menu'));
     }
 
     /**
@@ -52,7 +64,14 @@ class ReviewController extends Controller
      */
     public function update(Request $request, Review $review)
     {
-        //
+        $request->validate([
+            'menu_id' => 'required|exists:menus,id',
+            'rating' => 'required',
+            'body' => 'required',
+        ]);
+        $review = Review::find($id);
+        $review->update($request->all());
+        return redirect()->route('reviews.index')->with('message', 'Review updated successfully');
     }
 
     /**
@@ -60,6 +79,8 @@ class ReviewController extends Controller
      */
     public function destroy(Review $review)
     {
-        //
+        $review = Review::find($id);
+        $review->delete();
+        return redirect()->route('reviews.index')->with('message', 'Review deleted successfully');
     }
 }
