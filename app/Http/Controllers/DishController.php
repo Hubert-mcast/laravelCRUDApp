@@ -22,7 +22,7 @@ class DishController extends Controller
     public function create()
     {
         $dish = new Dish();
-        return view('dishes.create', compact('dishes'));
+        return view('dishes.create', compact('dish'));
     }
 
     /**
@@ -54,7 +54,6 @@ class DishController extends Controller
     public function edit($id)
     {
         $dish = Dish::find($id);
-        $dishes = Dish::orderBy('name')->pluck('name', 'id')->prepend('All Dishes', '');
         return view('dishes.edit', compact('dish'));
     }
 
