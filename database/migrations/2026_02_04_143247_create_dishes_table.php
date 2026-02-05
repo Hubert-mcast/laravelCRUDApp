@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->float('price');
-            $table->int('prep time in minutes');
+            $table->text('description');
             $table->timestamps();
         });
     }

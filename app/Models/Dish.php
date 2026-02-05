@@ -14,5 +14,5 @@ class Dish extends Model
         return $this->belongsTo(Menu::class);
     }
 
-    protected $fillable = ['name','price','prep time in minutes'];
+    protected $fillable = ['name','price','description'];
 }

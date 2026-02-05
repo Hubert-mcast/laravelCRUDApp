@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('menu_id')->constrained()->onDelete('cascade');
+            $table->foreignId('menu_id')->references('id')->on('menus')->onDelete('cascade');
             $table->string('rating');
             $table->string('body');
             $table->timestamps();

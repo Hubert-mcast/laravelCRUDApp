@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('wines', function (Blueprint $table) {
             $table->id();
-            $string->string('name');
-            $string->string('colour');
+            $table->string('name');
+            $table->string('colour');
             $table->timestamps();
         });
     }

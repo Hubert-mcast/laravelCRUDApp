@@ -13,7 +13,7 @@ class DishController extends Controller
     public function index()
     {
         $dishes = Dish::all();
-        return view('Dish.index', compact('dishes'));
+        return view('dishes.index', compact('dishes'));
     }
 
     /**
@@ -21,7 +21,7 @@ class DishController extends Controller
      */
     public function create()
     {
-        $dishes = new Dish();
+        $dish = new Dish();
         return view('dishes.create', compact('dish'));
     }
 
@@ -30,10 +30,10 @@ class DishController extends Controller
      */
     public function store(Request $request)
     {
-        $request-validate([
+        $request->validate([
             'name' => 'required',
             'price' => 'required',
-            'prep time in minutes' => 'required',
+            'description' => 'required',
         ]);
         Dish::create($request->all());
         return redirect()->route('dishes.index')->with('message', 'Dish added sucessfully');
@@ -66,7 +66,7 @@ class DishController extends Controller
         $request->validate([
             'name' => 'required',
             'price' => 'required',
-            'prep time in minutes' => 'required',
+            'description' => 'required',
         ]);
         $dish = Dish::find($id);
         $dish->update($request->all());

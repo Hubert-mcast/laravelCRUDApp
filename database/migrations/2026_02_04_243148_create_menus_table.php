@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('appetizer')->constrained()->onDelete('cascade');
-            $table->foreignId('main course')->constrained()->onDelete('cascade');
-            $table->foreignId('desert')->constrained()->onDelete('cascade');
-            $table->foreignId('wine pairing')->constrained()->onDelete('cascade').nullable();
+            $table->foreignId('appetizer')->references('id')->on('dishes')->onDelete('cascade');
+            $table->foreignId('main_course')->references('id')->on('dishes')->onDelete('cascade');
+            $table->foreignId('dessert')->references('id')->on('dishes')->onDelete('cascade');
+            $table->foreignId('wine_pairing')->references('id')->on('wines')->onDelete('cascade');
             $table->timestamps();
         });
     }
